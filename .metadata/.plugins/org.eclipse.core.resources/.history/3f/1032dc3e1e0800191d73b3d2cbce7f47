@@ -1,0 +1,19 @@
+package comm;
+
+public class Demo {
+	public static void main(String[] args){
+		
+    	SerialPortTest example = new SerialPortTest();
+     	
+		example.StartWorking("S\n");
+		
+		try {
+			Thread.sleep(10000);  //ÐÝÃß20s
+		}catch (Exception e) {
+			System.out.println("ÑÓÊ±³ö´í");
+		}
+		
+		example.StartWorking("D\n");
+	}
+	
+}

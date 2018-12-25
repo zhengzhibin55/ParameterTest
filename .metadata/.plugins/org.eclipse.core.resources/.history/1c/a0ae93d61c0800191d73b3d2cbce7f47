@@ -1,0 +1,8 @@
+package comm;
+
+public class test {
+	public static void main(String[] args){
+		FileOperate example = new FileOperate();
+		example.InitFile(example.DEFAULTFilePath+"/"+"result.txt");
+	}
+}
