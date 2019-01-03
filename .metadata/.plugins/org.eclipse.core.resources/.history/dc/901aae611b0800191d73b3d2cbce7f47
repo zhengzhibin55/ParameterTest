@@ -1,7 +1,0 @@
-package test;
-
-import MatlabProgram.Calculation;
-
-public class Demo {
-
-}
