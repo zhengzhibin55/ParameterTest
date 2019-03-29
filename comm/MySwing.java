@@ -1,4 +1,4 @@
-package comm;
+package ParameterTest;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +13,46 @@ import javax.swing.*;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+
+class MyJDialog extends JDialog{
+	public MyJDialog(JFrame frame){
+		super(frame,"连接测试",true);
+		Container container=getContentPane();
+		
+		JLabel jl=new JLabel("与下位机连接成功！");
+		//Font font = new Font("黑体", Font.PLAIN, 21);
+		jl.setFont(MySwing.font);
+		
+		container.add(jl);
+		setBounds(450, 300, 300, 200);
+	}
+}
+
+class MyJDialog2 extends JDialog{
+	public MyJDialog2(JFrame frame){
+		super(frame,"数据保存",true);
+		Container container=getContentPane();
+		
+		//jlabel换行
+		String   strMsg1   =   "数据保存在C:\\ParameterTest\\data.txt";   
+		String   strMsg2   =   "结果保存在C:\\ParameterTest\\result.txt"; 
+		String   strMsg3   =   "保存成功！"; 
+		String   strMsg = "<html><body>"+strMsg3+"<br>"+strMsg1+"<br>"+strMsg2+"<body></html>";  
+		JLabel   jl   =   new   JLabel(strMsg);  
+
+		jl.setFont(MySwing.font);
+		
+		container.add(jl);
+		setBounds(500, 300, 500, 200);
+	}
+}
+
+
+
+
+
  //setBounds(int x, int y, int width, int height)
-//X是左上角横坐标,Y是左上角纵坐标，windth是宽，height是高
+//X是左上角横坐标,Y是左上角纵坐标，windth是宽，height是高 
 //组件的坐标是相对于位置
 
 //需要的监听事件
@@ -24,8 +62,14 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 //开始测量键，决定信息发送 jb1
 
  public class MySwing extends JFrame{
+	//用于显示的字体
+	static final Font font = new Font("黑体", Font.PLAIN, 21); //弹出窗口显示文字
+	static final Font font2 = new Font("宋体", Font.BOLD, 13); //标签字体
+	static final Font font3 = new Font("黑体", Font.PLAIN, 14); //普通按钮
+	static final Font font4 = new Font("微软雅黑", Font.BOLD, 16); //确定测量按钮
+	//用于显示的字体 
 	
-	private JFrame frame = new JFrame();
+	protected JFrame frame = new JFrame();  
 	private JPanel panel = new JPanel(); //面板
 	//标签
 	private JLabel jl1 = new JLabel("选择端口:"); 
@@ -39,6 +83,11 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 	private JButton jb1 = new JButton("开始测量");
 	private JButton jb2 = new JButton("线路单位长度参数");
 	private JButton jb3 = new JButton("线路总长度参数");
+	//新增加按钮两个
+	private JButton jb4 = new JButton("连接测试");
+	private JButton jb5 = new JButton("结果保存");
+	
+	
 	//单选按钮
 	private JRadioButton jr1 = new JRadioButton("单回");
 	private JRadioButton jr2 = new JRadioButton("双回");
@@ -52,14 +101,31 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 	private List<Double> UnitLineParameters = new ArrayList<>();
 	//实时显示当前状态的字符串
 	private String Jl4String;
+	//保存线路信息，包括测试人员信息和线路名称
+	protected String PeopleName="未输入测试人员姓名";
+	protected String LineleName="未输入线路名称";
+
 	
 	/**
 	 * 设置基本组件及其位置
-	 */
-	private void AppearanceSetting(){	
+	 */  
+	private void AppearanceSetting(){
+				//字体设置
+				jl1.setFont(font2);
+				jl2.setFont(font2);
+				jl3.setFont(font2);
+				
+				jb1.setFont(font4);
+		
+				jb2.setFont(font3);
+				jb3.setFont(font3);
+				jb4.setFont(font3);
+				jb5.setFont(font3);
+		
 				//端口位置
 				jl1.setBounds(30,130,80,30); //选择端口
 				jc.setBounds(150,130,80,30); //端口
+				jb4.setBounds(250,130,100,30); //测试按钮
 				
 				//线路类型&单选按钮
 				jl2.setBounds(30,180,80,30); //线路类型
@@ -79,7 +145,8 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 				//结果显示区
 				jb2.setBounds(430,30,150,30); //线路单位长度参数
 				jb3.setBounds(610,30,150,30); //线路总长度参数
-				jtr.setBounds(350,80,550,300);//显示区间
+				jb5.setBounds(800,30,100,30);
+				jtr.setBounds(380,80,550,300);//显示区间
 				
 				//状态实时显示
 				jl4.setBounds(50,400,400,30);
@@ -274,7 +341,30 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 			}
 		});
 	}
-
+	/**
+	 * 
+	 */
+	private void Jb4Listener(){
+		jb4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MyJDialog(frame).setVisible(true);
+			}
+		});
+	}
+	/**
+	 * 
+	 */
+	private void Jb5Listener(){
+		jb5.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MyJDialog2(frame).setVisible(true);
+			}
+		});
+	}
+	
+	
 	/**
 	 * 开始测量，发出信号
 	 */
@@ -315,6 +405,8 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 		panel.add(jb1);
 		panel.add(jb2);
 		panel.add(jb3);
+		panel.add(jb4);
+		panel.add(jb5);
 		panel.add(jr1);
 		panel.add(jr2);
 		panel.add(jt1);
@@ -324,7 +416,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 		//设置Frame的样式和关闭方式
 		frame.setTitle("线路参数测量");
 		frame.setBackground(Color.white);
-		frame.setBounds(300,100,950,500);
+		frame.setBounds(300,100,970,500);
 		//setFont("黑体",Font.BOLD,20);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -339,6 +431,8 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 		Jt1Listener();
 		Jb2Listener();
 		Jb3Listener();
+		Jb4Listener();
+		Jb5Listener();
 		Jb1Listener();
 	}
 	
@@ -355,3 +449,4 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 		new MySwing().Demo();	
 	}
 }
+

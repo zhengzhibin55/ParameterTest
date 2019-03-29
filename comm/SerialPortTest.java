@@ -1,4 +1,4 @@
-package comm;
+package ParameterTest;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,51 +19,51 @@ import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 
 /**
- * @description: Ê×ÏÈ³õÊ¼»¯´®¿ÚÉèÖÃ£¬È»ºó·¢ËÍÏßÂ·ÀàĞÍÖ¸Áî£¬Í¬Ê±Éú³ÉÏàÓ¦µÄtxtÎÄ¼ş£¬×îºó½«·µ»ØµÄÊı¾İ·ÅÈëÏàÓ¦µÄÎÄ¼şÖĞ
+ * @description: é¦–å…ˆåˆå§‹åŒ–ä¸²å£è®¾ç½®ï¼Œç„¶åå‘é€çº¿è·¯ç±»å‹æŒ‡ä»¤ï¼ŒåŒæ—¶ç”Ÿæˆç›¸åº”çš„txtæ–‡ä»¶ï¼Œæœ€åå°†è¿”å›çš„æ•°æ®æ”¾å…¥ç›¸åº”çš„æ–‡ä»¶ä¸­
  * @author:zheng
- * @date:2018Äê12ÔÂ23ÈÕÏÂÎç3:10:54
+ * @date:2018å¹´12æœˆ23æ—¥ä¸‹åˆ3:10:54
  */
 public class SerialPortTest extends FileOperate implements SerialPortEventListener {
-	//¼ì²âÏµÍ³ÖĞ¿ÉÓÃµÄÍ¨Ñ¶¶Ë¿Ú
+	//æ£€æµ‹ç³»ç»Ÿä¸­å¯ç”¨çš„é€šè®¯ç«¯å£
 	private CommPortIdentifier portID;
-	//Ã¶¾ÙËùÓĞ¶Ë¿Ú
+	//æšä¸¾æ‰€æœ‰ç«¯å£
 	private Enumeration<CommPortIdentifier> portList;
-	//´®¿Ú
+	//ä¸²å£
 	private SerialPort serialPort;
-	//ÊäÈëÊä³öÁ÷
+	//è¾“å…¥è¾“å‡ºæµ
 	private InputStream inputStream;
 	private OutputStream outputStream;
-	//±£´æ´®¿Ú·µ»ØĞÅÏ¢
+	//ä¿å­˜ä¸²å£è¿”å›ä¿¡æ¯
 	private String test = "";
 	
 	protected static String PortType = "COM3";
 	
 	/**
-	 * @description ³õÊ¼»¯¶Ë¿Ú£¬´ò¿ª¶Ë¿Ú2
+	 * @description åˆå§‹åŒ–ç«¯å£ï¼Œæ‰“å¼€ç«¯å£3
 	 */
 	public void init() {
-		//»ñÈ¡ÏµÍ³ÖĞËùÓĞÍ¨Ñ¶¶Ë¿Ú
+		//è·å–ç³»ç»Ÿä¸­æ‰€æœ‰é€šè®¯ç«¯å£
 		portList = CommPortIdentifier.getPortIdentifiers();
-		//Ñ­»·Í¨Ñ¶¶Ë¿Ú£¬ÕÒµ½²¢´ò¿ª¶Ë¿Ú
+		//å¾ªç¯é€šè®¯ç«¯å£ï¼Œæ‰¾åˆ°å¹¶æ‰“å¼€ç«¯å£
 		while (portList.hasMoreElements()) {
 			portID = portList.nextElement();
-			//¶ÔËùÓĞ¶Ë¿Ú½øĞĞÑ­»·
+			//å¯¹æ‰€æœ‰ç«¯å£è¿›è¡Œå¾ªç¯
 			if(portID.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-				//ÕÒµ½¶Ë¿Ú²¢´ò¿ª
+				//æ‰¾åˆ°ç«¯å£å¹¶æ‰“å¼€
 				if((portID.getName()).equals(PortType)) {
-					System.out.println("ÕÒµ½"+PortType);
+					System.out.println("æ‰¾åˆ°"+PortType);
 			
 					try {
-						//´ò¿ª´®¿Ú
+						//æ‰“å¼€ä¸²å£
 						serialPort = (SerialPort) portID.open(Object.class.getName(), 100);
 					
-						//ÊµÀı»¯ÊäÈëÁ÷
+						//å®ä¾‹åŒ–è¾“å…¥æµ
 						inputStream = serialPort.getInputStream();
-						//ÉèÖÃ´®¿Ú¼àÌı
+						//è®¾ç½®ä¸²å£ç›‘å¬
 						serialPort.addEventListener(this);
-						//ÉèÖÃ´®¿ÚÊı¾İÊ±¼äÓĞÏŞ
+						//è®¾ç½®ä¸²å£æ•°æ®æ—¶é—´æœ‰é™
 						serialPort.notifyOnDataAvailable(true);
-						//ÉèÖÃ´®¿Ú²ÎÊı,ÒÀ´ÎÎª ²¨ÌØÂÊ£¬Êı¾İÎ»£¬Í£Ö¹Î»ºÍÆæÅ¼Ğ£ÑéÎ»
+						//è®¾ç½®ä¸²å£å‚æ•°,ä¾æ¬¡ä¸º æ³¢ç‰¹ç‡ï¼Œæ•°æ®ä½ï¼Œåœæ­¢ä½å’Œå¥‡å¶æ ¡éªŒä½
 						serialPort.setSerialPortParams(115200, 8, 1, 0);
 						
 					}catch (PortInUseException e) {
@@ -80,23 +80,23 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 		}
 	}
 	/**
-	 * @description ÊµÏÖ½Ó¿ÚSerialPortEventListenerÖĞµÄ·½·¨£¬¶ÁÈ¡´®¿ÚĞÅÏ¢
-	 * @param arg0 ´®¿ÚÊÂ¼ş
+	 * @description å®ç°æ¥å£SerialPortEventListenerä¸­çš„æ–¹æ³•ï¼Œè¯»å–ä¸²å£ä¿¡æ¯
+	 * @param arg0 ä¸²å£äº‹ä»¶
 	 */
 	@Override
 	public void serialEvent(SerialPortEvent event) {
 		switch (event.getEventType()) {
-        case SerialPortEvent.BI: // Í¨Ñ¶ÖĞ¶Ï
-        case SerialPortEvent.OE: // ÒçÎ»´íÎó
-        case SerialPortEvent.FE: // Ö¡´íÎó
-        case SerialPortEvent.PE: // ÆæÅ¼Ğ£Ñé´íÎó
-        case SerialPortEvent.CD: // ÔØ²¨¼ì²â
-        case SerialPortEvent.CTS: // Çå³ı·¢ËÍ
-        case SerialPortEvent.DSR: // Êı¾İÉè±¸×¼±¸ºÃ
-        case SerialPortEvent.RI: // ÏìÁåÕì²â
-        case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // Êä³ö»º³åÇøÒÑÇå¿Õ
+        case SerialPortEvent.BI: // é€šè®¯ä¸­æ–­
+        case SerialPortEvent.OE: // æº¢ä½é”™è¯¯
+        case SerialPortEvent.FE: // å¸§é”™è¯¯
+        case SerialPortEvent.PE: // å¥‡å¶æ ¡éªŒé”™è¯¯
+        case SerialPortEvent.CD: // è½½æ³¢æ£€æµ‹
+        case SerialPortEvent.CTS: // æ¸…é™¤å‘é€
+        case SerialPortEvent.DSR: // æ•°æ®è®¾å¤‡å‡†å¤‡å¥½
+        case SerialPortEvent.RI: // å“é“ƒä¾¦æµ‹
+        case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // è¾“å‡ºç¼“å†²åŒºå·²æ¸…ç©º
             break;
-        case SerialPortEvent.DATA_AVAILABLE: // ÓĞÊı¾İµ½´ï
+        case SerialPortEvent.DATA_AVAILABLE: // æœ‰æ•°æ®åˆ°è¾¾
             readComm();
             break;
         default:
@@ -105,16 +105,16 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 	}
 
 	/**
-	 * @description ¶ÁÈ¡´®¿Ú·µ»ØÊı¾İ£¬²¢´òÓ¡
+	 * @description è¯»å–ä¸²å£è¿”å›æ•°æ®ï¼Œå¹¶æ‰“å°
 	 */
 	public void readComm() {
 		byte[] readBuffer = new byte[10240];
 		try{
-			//ÔÚinitÖĞÒÑ¾­½«Êı¾İ¶ÁÈëinputStreamÖĞ
+			//åœ¨initä¸­å·²ç»å°†æ•°æ®è¯»å…¥inputStreamä¸­
 			inputStream = serialPort.getInputStream();
 			int len =0 ;
 			while((len = inputStream.read(readBuffer))!=-1) {
-				//È«²¿Ğ´Íê£¬È»ºó½áÊø£¬ËùÒÔÓÃbreak
+				//å…¨éƒ¨å†™å®Œï¼Œç„¶åç»“æŸï¼Œæ‰€ä»¥ç”¨break
 				test = new String(readBuffer, 0, len);
 				
 				if(test.equals("F")) {
@@ -123,7 +123,7 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 					}else if(LineType.equals("D")) {
 						WriteFile("2".getBytes());
 					}else {
-						System.out.println("FileOperate.HandleDataº¯ÊıÔÚ´´½¨ÎÄ¼şÊ±£¬ÏßÂ·ÀàĞÍ¸³Öµ´íÎó");
+						System.out.println("FileOperate.HandleDataå‡½æ•°åœ¨åˆ›å»ºæ–‡ä»¶æ—¶ï¼Œçº¿è·¯ç±»å‹èµ‹å€¼é”™è¯¯");
 					}
 					break;
 				}
@@ -139,23 +139,23 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 	}
 	
 	/**
-	 * @description ¹Ø±Õ´®¿Ú
+	 * @description å…³é—­ä¸²å£
 	 */
 	public void closeSerialPort() {
 		serialPort.close();
 	}
 
 	/**
-	 * @description Ïò´®¿Ú·¢ËÍÊı¾İ
-	 * @param information ·¢ËÍµÄ×Ö·û´®
+	 * @description å‘ä¸²å£å‘é€æ•°æ®
+	 * @param information å‘é€çš„å­—ç¬¦ä¸²
 	 */
 	public void sendMsg(String information) {
-		//¸ù¾İ´«µİµÄĞÅÏ¢¾ö¶¨ÏßÂ·ÀàĞÍ,²¢³õÊ¼»¯¶ÔÓ¦µÄÎÄ¼şÂ·¾¶
+		//æ ¹æ®ä¼ é€’çš„ä¿¡æ¯å†³å®šçº¿è·¯ç±»å‹,å¹¶åˆå§‹åŒ–å¯¹åº”çš„æ–‡ä»¶è·¯å¾„
 		
 		LineType = information.trim();
 		InitFilePath();
 		try {
-			//ÊµÀı»¯Êä³öÁ÷
+			//å®ä¾‹åŒ–è¾“å‡ºæµ
 			outputStream = serialPort.getOutputStream();
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -169,33 +169,33 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 	}
 	
 	public void StartWorking(String Command) {
-		Boolean FinishFlag = true;  //Ñ­»·Ìø³ö±êÖ¾Î» 
-		//³õÊ¼»¯¶Ë¿ÚÉèÖÃ
+		Boolean FinishFlag = true;  //å¾ªç¯è·³å‡ºæ ‡å¿—ä½ 
+		//åˆå§‹åŒ–ç«¯å£è®¾ç½®
 		init();
-		//·¢ËÍÃüÁî µ¥»Ø£º"S\n"»òÕßË«»Ø£º "D\n"
+		//å‘é€å‘½ä»¤ å•å›ï¼š"S\n"æˆ–è€…åŒå›ï¼š "D\n"
 		sendMsg(Command);
-		//½øĞĞµÈ´ı½áÎ²½ØÖ¹·û¡°F¡±µ½À´£¬È»ºóÍ£Ö¹
+		//è¿›è¡Œç­‰å¾…ç»“å°¾æˆªæ­¢ç¬¦â€œFâ€åˆ°æ¥ï¼Œç„¶ååœæ­¢
 		try{
 			while(FinishFlag) {
-				Thread.sleep(10);  //Ã¿10msÖØÆô½ø³Ì²é¿´
+				Thread.sleep(10);  //æ¯10msé‡å¯è¿›ç¨‹æŸ¥çœ‹
 				if(test.equals("F")){
 					FinishFlag = false;
 				}
 			}
 		}catch (Exception e) {
-			System.out.println("ÉÏÎ»»úµÈ´ı½ØÖ¹·ûFµ½À´Ê±³ö´í");
+			System.out.println("ä¸Šä½æœºç­‰å¾…æˆªæ­¢ç¬¦Fåˆ°æ¥æ—¶å‡ºé”™");
 		}
 		
 		
-		//³õÊ¼»¯±êÖ¾Î»
+		//åˆå§‹åŒ–æ ‡å¿—ä½
 		FinishFlag = true;
 		test = "";
-		//¹Ø±Õ´®¿Ú
+		//å…³é—­ä¸²å£
 		closeSerialPort();
-		System.out.println("ÒÑ³É¹¦²É¼¯Êı¾İ");
+		System.out.println("å·²æˆåŠŸé‡‡é›†æ•°æ®");
 
 	}
-
+ 
 	/*
 	public static void main(String[] args)  {
 		
@@ -204,9 +204,9 @@ public class SerialPortTest extends FileOperate implements SerialPortEventListen
 		example.StartWorking("S\n");
 		
 		try {
-			Thread.sleep(10000);  //ĞİÃß20s
+			Thread.sleep(10000);  //ä¼‘çœ 20s
 		}catch (Exception e) {
-			System.out.println("ÑÓÊ±³ö´í");
+			System.out.println("å»¶æ—¶å‡ºé”™");
 		}
 		
 		example.StartWorking("D\n");

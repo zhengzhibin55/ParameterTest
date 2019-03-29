@@ -1,18 +1,24 @@
-package comm;
+package ParameterTest;
+
 
 import MatlabProgram.Calculation;
 
 public class MATLAB {
 	
-	/**
-	 * 调用Matlab解决线路阻抗
+	/** 
+	 * 璋冪敤Matlab瑙ｅ喅绾胯矾闃绘姉
 	 */
 	public static void CalculateImpedance(){
 		try{
 			Calculation example = new Calculation();
 			example.Algorithm();
 		}catch(Exception e){
-			System.out.println("调用matlab求解阻抗出错");
+			System.out.println("璋冪敤matlab姹傝В闃绘姉鍑洪敊");
 		}
 	}
+	
+	public static void main(String[] args){
+		MATLAB.CalculateImpedance();
+	}
+	
 }

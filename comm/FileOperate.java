@@ -1,4 +1,4 @@
-package comm;
+package ParameterTest;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,59 +7,59 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 
 /**
- * @description: txtÎÄ¼ş²Ù×÷Àà£¬´´½¨data.txtÎÄ¼ş½øĞĞÊı¾İ±£´æ
+ * @description: txtæ–‡ä»¶æ“ä½œç±»ï¼Œåˆ›å»ºdata.txtæ–‡ä»¶è¿›è¡Œæ•°æ®ä¿å­˜
  * @author:zheng
- * @date:2018Äê12ÔÂ20ÈÕÉÏÎç9:41:18
+ * @date:2018å¹´12æœˆ20æ—¥ä¸Šåˆ9:41:18
  */
 public class FileOperate {
-	//Ä¬ÈÏµÄÎÄ¼ş¼ĞÂ·¾¶
+	//é»˜è®¤çš„æ–‡ä»¶å¤¹è·¯å¾„
 	protected static final String DEFAULTFilePath = "C:/ParameterTest";
-	//±£´æÊı¾İµÄtxtÎÄ¼şÃû
+	//ä¿å­˜æ•°æ®çš„txtæ–‡ä»¶å
 	protected static final String FILE_NAME = "data.txt";
 	protected static final String RESULT_NAME = "result.txt";
 	
-	//ÔİÊ±ÉáÆú
+	//æš‚æ—¶èˆå¼ƒ
 	public final String TEP_NAME = "tep.txt";
 	
-	//ÉèÖÃ²ÎÊıÀàĞÍ±äÁ¿ Ä¬ÈÏÊÇµ¥»Ø
+	//è®¾ç½®å‚æ•°ç±»å‹å˜é‡ é»˜è®¤æ˜¯å•å›
 	protected static String LineType = "S";
-	//ÉèÖÃÏßÂ·³¤¶È
+	//è®¾ç½®çº¿è·¯é•¿åº¦
 	protected static double Linelength = 1.0;
 	
 	/**
-	 * @description ÔÚjava·¢ËÍÖ¸ÁîÊ±¸üĞÂ²ÎÊıÀàĞÍÎ»£¬ÓÃÓÚ´´½¨²»Í¬µÄtxtÎÄ¼ş
+	 * @description åœ¨javaå‘é€æŒ‡ä»¤æ—¶æ›´æ–°å‚æ•°ç±»å‹ä½ï¼Œç”¨äºåˆ›å»ºä¸åŒçš„txtæ–‡ä»¶
 	 * @param LineType
 	 */
 	
 	/**
-	 * @description ¸ù¾İÎÄ¼şÃû£¬³õÊ¼»¯ÎÄ¼ş
-	 * @param FileName ÎÄ¼şÂ·¾¶+ÎÄ¼şÃû
+	 * @description æ ¹æ®æ–‡ä»¶åï¼Œåˆå§‹åŒ–æ–‡ä»¶
+	 * @param FileName æ–‡ä»¶è·¯å¾„+æ–‡ä»¶å
 	 */
 	public void InitFile(String FileName) {
 		File file = new File(FileName);
 		
 		if (file.exists()) {
-			System.out.println(FileName+"ÎÄ¼ş´æÔÚ£¬²¢³õÊ¼»¯");
+			System.out.println(FileName+"æ–‡ä»¶å­˜åœ¨ï¼Œå¹¶åˆå§‹åŒ–");
 			file.delete();
 		}
 		try {
 			file.createNewFile();
 		}catch (Exception e) {
-			System.out.println(FileName+"ÎÄ¼ş´´½¨³ö´í");
+			System.out.println(FileName+"æ–‡ä»¶åˆ›å»ºå‡ºé”™");
 		}
 	}
 	
 	/**
-	 * @description ÔÚÖ¸¶¨ÎÄ¼şÂ·¾¶ÏÂ´´½¨Êı¾İÎÄ¼ş data.txt
+	 * @description åœ¨æŒ‡å®šæ–‡ä»¶è·¯å¾„ä¸‹åˆ›å»ºæ•°æ®æ–‡ä»¶ data.txt
 	 */
 	public void InitFilePath() {
-		//Ê×ÏÈÅĞ¶ÏÎÄ¼ş¼ĞÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò´´½¨ÎÄ¼ş¼Ğ£¬È»ºóÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ£¬´æÔÚÔòÉ¾³ı¡£×îºó´´½¨ÎÄ¼ş
+		//é¦–å…ˆåˆ¤æ–­æ–‡ä»¶å¤¹æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™åˆ›å»ºæ–‡ä»¶å¤¹ï¼Œç„¶ååˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œå­˜åœ¨åˆ™åˆ é™¤ã€‚æœ€ååˆ›å»ºæ–‡ä»¶
 				File filepath = new File(DEFAULTFilePath);
 				if(!filepath.exists()) {
-					//System.out.println("´´½¨ĞÂÎÄ¼ş¼Ğ");
+					//System.out.println("åˆ›å»ºæ–°æ–‡ä»¶å¤¹");
 					filepath.mkdirs();
 				}
-				//´´½¨ÎÄ¼ş 
+				//åˆ›å»ºæ–‡ä»¶ 
 				InitFile(DEFAULTFilePath+"/"+FILE_NAME);
 			
 	}
@@ -67,69 +67,69 @@ public class FileOperate {
 	
 	public void WriteByte(String FilePath,byte[] Data) {
 		File file = new File(FilePath);
-		//¶ÔÎÄ¼ş½øĞĞĞ´²Ù×÷£¬ÓÉÓÚÊÇ×Ö½ÚÁ÷£¬Òò´Ë²ÉÓÃFileoutputstream
+		//å¯¹æ–‡ä»¶è¿›è¡Œå†™æ“ä½œï¼Œç”±äºæ˜¯å­—èŠ‚æµï¼Œå› æ­¤é‡‡ç”¨Fileoutputstream
 		try {
 			FileOutputStream out = new FileOutputStream(file,true);
 			out.write(Data);
 			out.close();
 		}catch (Exception e) {
-			System.out.println("txtÎÄ¼şĞ´³ö´í");
+			System.out.println("txtæ–‡ä»¶å†™å‡ºé”™");
 		}
 	}
 	
 	/**
-	 * @description ÔÚÄ¬ÈÏÂ·¾¶ÏÂ¸ù¾İÏßÂ·ÀàĞÍ½øĞĞĞ´²Ù×÷
-	 * @param LineType ÏßÂ·ÀàĞÍ 'D'ÊÇË«»Ø£» 'S'ÊÇµ¥»Ø
-	 * @param Data Òì²½´®¿ÚÍ¨ĞÅÊı¾İ
+	 * @description åœ¨é»˜è®¤è·¯å¾„ä¸‹æ ¹æ®çº¿è·¯ç±»å‹è¿›è¡Œå†™æ“ä½œ
+	 * @param LineType çº¿è·¯ç±»å‹ 'D'æ˜¯åŒå›ï¼› 'S'æ˜¯å•å›
+	 * @param Data å¼‚æ­¥ä¸²å£é€šä¿¡æ•°æ®
 	 */
 	public void WriteFile(byte[] Data) {
 		File file = new File(DEFAULTFilePath);
-		//½øĞĞĞ´²Ù×÷  
+		//è¿›è¡Œå†™æ“ä½œ  
 		WriteByte(DEFAULTFilePath+"/"+FILE_NAME,Data);
 	}
 	
 	
 	/**
-	 * @description ½«data.txtÎÄ¼ş½øĞĞ´¦Àí£¬Éú³ÉĞÂµÄ¿É¹©matlabµ÷ÓÃµÄÎÄ¼ştep.txtÎÄ¼ş
-	 * 				²Ù×÷°üÀ¨£ºÈ·ÈÏÎÄ¼şÊÇ·ñ´æÔÚ£¬´æÔÚÔòÉ¾³ıÈ»ºóÖØĞÂ´´½¨£¬È»ºó¸ù¾İÏßÂ·ÀàĞÍºÍ
-	 * 				Êı¾İÊıÁ¿È·ÈÏÊı¾İÕıÈ·£¬È»ºóÉú³ÉĞÂµÄtepÊı¾İÎÄ¼ş£¬ÔÚÎÄ¼ş½áÎ²Ğ´ÉÏÏßÂ·ÀàĞÍ
-	 * 				µ¥Î»Îª1£¬Ë«»ØÎª2
+	 * @description å°†data.txtæ–‡ä»¶è¿›è¡Œå¤„ç†ï¼Œç”Ÿæˆæ–°çš„å¯ä¾›matlabè°ƒç”¨çš„æ–‡ä»¶tep.txtæ–‡ä»¶
+	 * 				æ“ä½œåŒ…æ‹¬ï¼šç¡®è®¤æ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œå­˜åœ¨åˆ™åˆ é™¤ç„¶åé‡æ–°åˆ›å»ºï¼Œç„¶åæ ¹æ®çº¿è·¯ç±»å‹å’Œ
+	 * 				æ•°æ®æ•°é‡ç¡®è®¤æ•°æ®æ­£ç¡®ï¼Œç„¶åç”Ÿæˆæ–°çš„tepæ•°æ®æ–‡ä»¶ï¼Œåœ¨æ–‡ä»¶ç»“å°¾å†™ä¸Šçº¿è·¯ç±»å‹
+	 * 				å•ä½ä¸º1ï¼ŒåŒå›ä¸º2
 	 */             
 	public void HandleData() {
-		//³õÊ¼»¯tepÎÄ¼ş
+		//åˆå§‹åŒ–tepæ–‡ä»¶
 		InitFile(DEFAULTFilePath+"/"+TEP_NAME);
-		//È·ÈÏÊı¾İÕıÈ·ºó½øĞĞtepĞ´²Ù×÷
+		//ç¡®è®¤æ•°æ®æ­£ç¡®åè¿›è¡Œtepå†™æ“ä½œ
 		try {
 			FileReader fr = new FileReader(DEFAULTFilePath+"/"+FILE_NAME);
-			//BufferedReaderÀà¾ßÓĞÄÚ²¿»º´æ»úÖÆ£¬¿ÉÒÔÒÔĞĞÎªµ¥Î»½øĞĞÊäÈë
+			//BufferedReaderç±»å…·æœ‰å†…éƒ¨ç¼“å­˜æœºåˆ¶ï¼Œå¯ä»¥ä»¥è¡Œä¸ºå•ä½è¿›è¡Œè¾“å…¥
 			BufferedReader br = new BufferedReader(fr);
 			String s = "";
-			//ÅĞ¶Ï½áÎ²ÊÇFÊ±½áÊøÕû¸ö×ª»»¹ı³Ì
+			//åˆ¤æ–­ç»“å°¾æ˜¯Fæ—¶ç»“æŸæ•´ä¸ªè½¬æ¢è¿‡ç¨‹
 			while(!(s=br.readLine()).equals("F")) {
 				//System.out.println(s);
 				WriteByte(DEFAULTFilePath+"/"+TEP_NAME, (s+"\n").getBytes());
 			}
-			//¸ù¾İÏßÂ·ÀàĞÍ²»Í¬£¬¶Ô½áÎ²½øĞĞ²»Í¬µÄ¸³Öµ,µ¥»Ø½áÎ²¸³Öµ1£¬Ë«»Ø½áÎ²¸³Öµ2
-			System.out.println("ÏßÂ·ÀàĞÍÎª£º"+LineType);
+			//æ ¹æ®çº¿è·¯ç±»å‹ä¸åŒï¼Œå¯¹ç»“å°¾è¿›è¡Œä¸åŒçš„èµ‹å€¼,å•å›ç»“å°¾èµ‹å€¼1ï¼ŒåŒå›ç»“å°¾èµ‹å€¼2
+			System.out.println("çº¿è·¯ç±»å‹ä¸ºï¼š"+LineType);
 			
 			if(LineType.equals("S")) {
 				WriteByte(DEFAULTFilePath+"/"+TEP_NAME, ("1"+"\n").getBytes());
 			}else if(LineType.equals("D")) {
 				WriteByte(DEFAULTFilePath+"/"+TEP_NAME, ("2"+"\n").getBytes());
 			}else {
-				System.out.println("FileOperate.HandleDataº¯ÊıÔÚ´´½¨ÎÄ¼şÊ±£¬ÏßÂ·ÀàĞÍ¸³Öµ´íÎó");
+				System.out.println("FileOperate.HandleDataå‡½æ•°åœ¨åˆ›å»ºæ–‡ä»¶æ—¶ï¼Œçº¿è·¯ç±»å‹èµ‹å€¼é”™è¯¯");
 			}
 			
-			//¹Ø±ÕÁ÷
+			//å…³é—­æµ
 			br.close();
 			fr.close();
 		}catch (Exception e) {
-			System.out.println("FileOperate.HandleDataº¯Êı¶ÁÈ¡dataÎÄ¼ş£¬´´½¨tepÎÄ¼ş¹ı³Ì³ö´í");
+			System.out.println("FileOperate.HandleDataå‡½æ•°è¯»å–dataæ–‡ä»¶ï¼Œåˆ›å»ºtepæ–‡ä»¶è¿‡ç¨‹å‡ºé”™");
 		}
 	}
 	
 	/**
-	 * @description ¶ÔFileOperateµÄº¯Êı½øĞĞ²âÊÔ
+	 * @description å¯¹FileOperateçš„å‡½æ•°è¿›è¡Œæµ‹è¯•
 	 * @param args
 	 */
 	/*
@@ -145,3 +145,4 @@ public class FileOperate {
 	
 	
 }
+
