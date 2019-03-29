@@ -13,6 +13,8 @@ import javax.swing.*;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import test.SwingThreadTest2;
+
 
 class MyJDialog extends JDialog{
 	public MyJDialog(JFrame frame){
@@ -363,8 +365,7 @@ class MyJDialog2 extends JDialog{
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * 开始测量，发出信号
 	 */
@@ -373,20 +374,45 @@ class MyJDialog2 extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//新建SerialPortTest的对象，调用其函数
-				//jl4.setText("正在测量中");
-				SerialPortTest example = new SerialPortTest();
-				//打开端口开始工作
-				if(FileOperate.LineType.equals("S")) {
-					example.StartWorking("S\n");
-				}else if(FileOperate.LineType.equals("D")) {
-					example.StartWorking("D\n");
-				}else {
-					System.out.println("MySwing.jb1Listener在判断线路类型时错误");
-				}
-				//调用Matlab函数求解问题
-				MATLAB.CalculateImpedance();
-				jl4.setText("本次测量结束");
+		        new Thread(new Runnable() {
+					public void run() {
+						//将显示正在测量操作发送到EDT的可执行队列中
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								jl4.setText("正在测量中"); 
+							}
+						});
+						
+						//进行上传及算法计算
+						//新建SerialPortTest的对象，调用其函数
+						SerialPortTest example = new SerialPortTest();
+						//打开端口开始工作
+						if(FileOperate.LineType.equals("S")) {
+							example.StartWorking("S\n");
+						}else if(FileOperate.LineType.equals("D")) {
+							example.StartWorking("D\n");
+						}else {
+							System.out.println("MySwing.jb1Listener在判断线路类型时错误");
+						}
+						
+						//将页面更改操作发送到EDT的可执行队列中
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								jl4.setText("正在对数据进行算法处理"); 
+							}
+						});
+						
+						//调用Matlab函数求解问题
+						MATLAB.CalculateImpedance();
+						
+						//将页面更改操作发送到EDT的可执行队列中
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								jl4.setText("本次测量结束"); 
+							}
+						});
+					}
+				}).start();
 			}
 		});
 	}
@@ -446,7 +472,13 @@ class MyJDialog2 extends JDialog{
 	}
 	
 	public static void main(String[] args){
-		new MySwing().Demo();	
+		
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				new MySwing().Demo();
+			}
+		});
+	
 	}
 }
 

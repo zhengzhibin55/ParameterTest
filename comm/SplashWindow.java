@@ -19,6 +19,8 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import test.SwingThreadTest2;
+
 
 //setBounds(int x, int y, int width, int height)
 //X是左上角横坐标,Y是左上角纵坐标，windth是宽，height是高 
@@ -142,7 +144,7 @@ public class SplashWindow extends JFrame {
 					}
 				});
 			}
-		}).run();
+		}).start();
 
 	}
 
@@ -225,11 +227,13 @@ public class SplashWindow extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//定义组件
-		 new SplashWindow().Demo();
 		
-		
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				 new SplashWindow().Demo();
+			}
+		});
+
 		
 
 	}
